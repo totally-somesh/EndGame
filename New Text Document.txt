@@ -1,0 +1,1281 @@
+package SinglyLinkedList;
+
+import java.util.Stack;
+
+public class SinglyLinkedList {
+
+	private Node head;
+
+	public SinglyLinkedList() {
+
+		this.head = null;
+	}
+
+	public Node getHead() {
+		return head;
+	}
+
+	public void setHead(Node head) {
+		this.head = head;
+	}
+
+	public boolean insertByValue(int data) {
+
+		Node newNode = new Node(data);
+
+		if (head == null) {
+
+			head = newNode;
+			return true;
+		}
+
+		Node last = head;
+		while (last.getNext() != null) {
+
+			last = last.getNext();
+		}
+
+		last.setNext(newNode);
+		return true;
+	}// end of insertByValue()
+
+	public void display() {
+
+		Node temp = head;
+
+		if (temp == null) {
+
+			return;
+		}
+
+		while (temp != null) {
+
+			System.out.print(temp.getData() + " | ");
+			temp = temp.getNext();
+		}
+		System.out.println(" ");
+	}// end of display()
+
+	public void displayByRecursion(Node head) {
+
+		if (head == null) {
+			return;
+		}
+		System.out.print(head.getData() + " | ");
+		displayByRecursion(head.getNext());
+		System.out.println(" ");
+	}
+
+	public void displayReverse() {
+
+		Node temp = head;
+		Stack<Node> S = new Stack();
+
+		if (temp == null) {
+			return;
+		}
+
+		while (temp != null) {
+			S.push(temp);
+			temp = temp.getNext();
+		}
+
+		while (!S.isEmpty()) {
+			System.out.print(S.pop().getData() + " | ");
+		}
+	}// end of diplayReverse()
+
+	public void displayReverseByRecursion(Node head) {
+
+		if (head == null) {
+
+			return;
+		}
+		displayReverseByRecursion(head.getNext());
+		System.out.print(head.getData() + " | ");
+	}// end of disaplyReverseByRecursion()
+
+	public boolean insertByPosition(int data, int position) {
+
+		Node newNode = new Node(data);
+
+		if (position <= 0 || (head == null && position > 1)) {
+
+			return false;
+		}
+
+		if (position == 1) {
+
+			newNode.setNext(head);
+			head = newNode;
+			return true;
+		}
+
+		Node prev = head;
+		for (int i = 1; i < position - 1; i++) {
+
+			prev = prev.getNext();
+			if (prev == null) {
+
+				return false;
+			}
+		}
+
+		newNode.setNext(prev.getNext());
+		prev.setNext(newNode);
+		return true;
+	}// end of insertByPosition()
+
+	public boolean deleteByValue(int data) {
+
+		if (head == null) {
+
+			return false;
+		}
+
+		if (head.getData() == data) {
+
+			head = head.getNext();
+			return true;
+		}
+
+		Node prev = head;
+		Node del = head;
+		while (del.getData() != data) {
+
+			prev = del;
+			del = del.getNext();
+			if (del == null) {
+
+				return false;
+			}
+		} // end of while
+
+		prev.setNext(del.getNext());
+		return true;
+	}// end of deleteByValue()
+
+	public boolean deleteByPosition(int position) {
+
+		if(head == null || position < 1) {
+			
+			return false;			
+		} 
+		
+		if(position == 1) {
+			
+			head = head.getNext();
+			return true;
+		}
+		
+		Node prev = head;
+		for(int i=1; i<position-1; i++) {
+			
+			prev = prev.getNext();
+			if(prev.getNext() == null) {
+				return false;				
+			}			
+		}//end of for loop
+		
+		Node del = prev.getNext();
+		prev.setNext(del.getNext());
+		return true;		
+	}//end of deleteByPosition()
+	
+	public void reverse() {
+		
+		if(head == null || head.getNext() == null) {
+			
+			return;
+		}
+		
+		Node n1 = head;
+		Node n2 = head.getNext();
+		Node n3 = null;
+		
+		while(n2 != null) {
+
+			n3 = n2.getNext();
+			n2.setNext(n1);
+			n1 = n2;
+			n2 = n3;		
+		}
+		
+		head.setNext(null);
+		head = n1;		
+	}//end of reverse()
+
+
+	public void reverseByRecursion(Node n1, Node n2) {
+		
+		if(n2 == null) {
+			head.setNext(null);
+			head = n1;
+			return;			
+		}
+		
+		reverseByRecursion(n2, n2.getNext());
+		n2.setNext(n1);	
+	}//end of reverseByRecursion();
+	
+}
+
+_____________________________________________________________________________________
+
+package DoublyLinkedList;
+
+public class DoublyLinkedList {
+
+	private Node head;
+
+	public Node getHead() {
+		return head;
+	}
+
+	public void setHead(Node head) {
+		this.head = head;
+	}
+
+	public boolean insertByValue(int data) {
+
+		Node newNode = new Node(data);
+
+		if (head == null) {
+
+			head = newNode;
+			return true;
+		}
+
+		Node last = head;
+		while (last.getNext() != null) {
+
+			last = last.getNext();
+			if (last == null) {
+
+				return false;
+			}
+		} // end of while
+
+		last.setNext(newNode);
+		newNode.setPrev(last);
+		return true;
+	}// end of insertByValue()
+
+	public void display() {
+
+		if (head == null) {
+
+			return;
+		}
+
+		Node temp = head;
+		while (temp != null) {
+
+			System.out.print(temp.getData() + " | ");
+			temp = temp.getNext();
+		}
+		System.out.println(" ");
+	}// end of display()
+
+//	public boolean insertByPosition(int data, int position) {
+//
+//		if (position <= 0 || (head == null && position > 1)) {
+//			return false;
+//		}
+//		
+//		Node newNode = new Node(data);
+//		
+//		if(position == 1) {
+//			
+//			if(head != null) {
+//				
+//				newNode.setNext(head);
+//				head.setPrev(newNode);		
+//			}
+//			head = newNode;
+//			return true;		
+//		}//end of position 1 insertion
+//		
+//		Node prev = head;
+//		for(int i=1; i<position-1; i++) {
+//			
+//			prev = prev.getNext();
+//			if(prev == null) {
+//				
+//				return false;
+//			}
+//		}//end of for loop
+//		
+//		Node next = prev.getNext();
+//		
+//		if(next != null) {
+//			
+//			newNode.setNext(next);
+//			prev.setNext(newNode);
+//		}
+//		newNode.setPrev(prev);
+//		prev.setNext(newNode);
+//		return true;
+//
+//	}
+
+	public boolean insertByPosition(int data, int position) {
+
+		if (position <= 0 || (head == null && position > 1)) {
+			return false;
+		}
+		
+		Node newNode = new Node(data);
+		
+		if(position == 1) {
+			
+			if(head != null) {
+				
+				newNode.setNext(head);
+				head.setPrev(newNode);				
+			}
+			head = newNode;
+			return true;			
+		}//end of if
+		
+		
+		Node prev = head;
+		for(int i=1; i<position-1; i++) {
+			
+			prev = prev.getNext();
+			if(prev == null) {
+				
+				return false;				
+			}
+		}
+		
+		Node next = prev.getNext();
+		
+		if(next != null) {	
+			newNode.setNext(next);
+			next.setPrev(newNode);
+		}
+		newNode.setPrev(prev);
+		prev.setNext(newNode);
+		return true; 		
+	}//end of insertByPosition()
+	
+	public boolean deleteByValue(int data) {
+		
+		if(head == null) {
+			return false;
+		}
+		
+		if(head.getData() == data) {
+			
+			head = head.getNext();
+			if(head != null) {
+				
+				head.setPrev(null);			
+			}
+			return true;			
+		}//end of if
+		
+		Node del = head;
+		while(del.getData() != data) {
+			
+			del = del.getNext();
+			if(del == null) {		
+				return false;
+			}
+		}
+		
+		Node prev = del.getPrev();
+		Node next = del.getNext();
+		
+		prev.setNext(next);
+		if(next != null) {
+			next.setPrev(prev);
+		}
+		return true;	
+	}//end of deleteByData()
+	
+	public boolean deleteByPosition(int position) {
+		
+		if(position <= 0 || head == null) {
+			return false;
+		}
+		
+		if(position == 1) {
+			head = head.getNext();
+			if(head != null) {
+				head.setPrev(null);
+			}
+			return true;			
+		}
+		
+		Node del = head;
+		for(int i=1; i<position; i++) {
+			
+			del = del.getNext();
+			if(del == null) {
+				return false;
+			}
+		}
+		
+		Node prev = del.getPrev();
+		Node next = del.getNext();
+		
+		prev.setNext(next);
+		if(next != null) {
+			
+			next.setPrev(prev);
+		}
+		return true;	
+	}//end of deleteByPosition()
+	
+	
+
+}
+
+
+
+___________________________________________________________________________________________
+
+
+public class CircularLInkedList {
+    private Node head;
+
+    public CircularLInkedList() {
+        head = null;
+    }
+
+    public boolean insert(int data) {
+        Node newNode = new Node(data);
+        if(newNode == null) {
+            return false;
+        }
+
+        if(head == null) {
+            head = newNode;
+            newNode.setNext(newNode);
+            return true;
+        }
+
+        Node last = head;
+        while(last.getNext() != head) {
+            last = last.getNext();
+        }
+
+        last.setNext(newNode);
+        newNode.setNext(head);
+
+        return true;
+    }
+
+    public boolean insert(int data, int position) {
+        if(position <= 0 || (head == null && position > 1)) {
+            return false;
+        }
+
+        Node newNode = new Node(data);
+        if(newNode == null) {
+            return false;
+        }
+
+        if(position == 1) {
+
+            //if list is empty
+            if(head == null) {
+                head = newNode;
+                newNode.setNext(head);
+                return true;
+            }
+
+            //list is not empty
+            newNode.setNext(head);
+            Node last = head;
+            while(last.getNext() != head) {
+                last = last.getNext();
+            }
+            last.setNext(newNode);
+            head = newNode;
+            return true;
+        }
+
+        Node prev = head;
+        for(int i = 1; i < position - 1; i++) {
+            prev = prev.getNext();
+            if(prev == head) {
+                return false;
+            }
+        }
+
+        newNode.setNext(prev.getNext());
+        prev.setNext(newNode);
+
+        return true;
+    }
+
+    public void display() {
+        if(head == null) {
+            return;
+        }
+
+        Node temp = head;
+        do {
+            System.out.print(temp.getData() + " ");
+            temp = temp.getNext();
+        }while (temp != head);
+        System.out.println();
+    }
+
+    public boolean deleteByVal(int data) {
+        if(head == null) {
+            return false;
+        }
+
+        if(data == head.getData()) {
+            //if the list is having only one node
+            if(head.getNext() == head) {
+                head = null;
+                return true;
+            }
+
+            //if the list is having more than one node
+            Node last = head;
+            while(last.getNext() != head) {
+                last = last.getNext();
+            }
+            last.setNext(head.getNext());
+            head = head.getNext();
+
+            return true;
+
+        }
+
+        Node prev = head, del = head;
+        while(del.getData() != data) {
+            prev = del;
+            del = del.getNext();
+            if(del == head) {
+                return false;
+            }
+        }
+
+        prev.setNext(del.getNext());
+        return true;
+    }
+
+    public boolean deleteByPosition(int position) {
+        if(position <= 0 || head == null) {
+            return false;
+        }
+
+        if(position == 1) {
+            if(head.getNext() == head) {
+                head = null;
+                return true;
+            }
+
+            Node last = head;
+            while(last.getNext() != head) {
+                last = last.getNext();
+            }
+            last.setNext(head.getNext());
+            head = head.getNext();
+            return true;
+        }
+
+        Node prev = head, del = head;
+        for(int i = 1; i < position; i++) {
+            prev = del;
+            del = del.getNext();
+            if(del == head) {
+                return false;
+            }
+        }
+
+        prev.setNext(del.getNext());
+        return true;
+    }
+}
+
+________________________________________________________________________________________
+
+
+package BinarySearch;
+
+public class Definition {
+
+	public static int binarySearch(int[] arr, int key) {
+
+		int left = 0;
+		int right = arr.length - 1;
+		int mid = 0;
+
+		while (left <= right) {
+
+			mid = (left + right) / 2;
+
+			if (arr[mid] == key) {
+
+				return mid;
+			}
+
+			if (arr[mid] > key) {
+				right = mid - 1;
+			} else {
+				left = mid + 1;
+			}
+		}
+		return 999;
+	}//end of BinarySearch
+	
+	public static int binarySearch(int [] arr,int left,int right,int key) {
+		
+		if(left > right) {
+			return 999;
+		}
+		
+		int mid = (left + right) / 2;
+		
+		if(arr[mid] == key) {
+			return key;
+		}
+		
+		if(arr[mid] > key) {
+			
+			return binarySearch(arr,left,mid-1,key);
+		} 
+		else {
+			
+			return binarySearch(arr,mid+1,right,key);
+		}
+			
+	}//end of binarySearch By Recursion;
+
+}
+
+__________________________________________________________________________________________
+
+
+package BinarySeachTree;
+
+import java.util.Stack;
+
+public class BinarySearchTree {
+
+	private Node root;
+
+	public Node getRoot() {
+		return root;
+	}
+
+	public void setRoot(Node root) {
+		this.root = root;
+	}
+
+	public BinarySearchTree() {
+
+		this.root = null;
+	}
+
+	public boolean insertData(int data) {
+
+		Node newNode = new Node(data);
+
+		Node temp = root;
+
+		if (root == null) {
+
+			root = newNode;
+			return true;
+		}
+
+		while (true) {
+
+			if (data == temp.getData()) {
+				return false;
+			}
+
+			if (data < temp.getData()) {
+
+				if (temp.getLeft() == null) {
+
+					temp.setLeft(newNode);
+					return true;
+				}
+				temp = temp.getLeft();
+			} else {
+
+				if (temp.getRight() == null) {
+
+					temp.setRight(newNode);
+					return true;
+				}
+				temp = temp.getRight();
+			} // end of if - else block
+		} // end of while
+	}// end of insert method
+
+	public void preOrder() {
+
+		Node temp = root;
+		Stack<Node> S = new Stack<>();
+
+		while (temp != null || !S.isEmpty()) {
+
+			while (temp != null) {
+
+				System.out.print(temp.getData() + " | ");
+				S.push(temp);
+				temp = temp.getLeft();
+			}
+			temp = S.pop();
+			temp = temp.getRight();
+		} // end of while
+	}// end of preOrder method
+
+	public void inOrder() {
+
+		Node temp = root;
+		Stack<Node> S = new Stack<>();
+
+		while (temp != null || !S.isEmpty()) {
+
+			while (temp != null) {
+
+				S.push(temp);
+				temp = temp.getLeft();
+			}
+
+			temp = S.pop();
+			System.out.print(temp.getData() + " | ");
+			temp = temp.getRight();
+		} // end of while
+	}// end of inOrder method
+
+	public void postOrder(Node root) {
+
+		if (root == null) {
+			return;
+		}
+
+		postOrder(root.getLeft());
+		postOrder(root.getRight());
+		System.out.print(root.getData() + " | ");
+
+	}// end of preOrder method
+
+	public void inOrderByRecursion(Node root) {
+
+		if (root == null) {
+			return;
+		}
+
+		inOrderByRecursion(root.getLeft());
+		System.out.print(root.getData() + " | ");
+		inOrderByRecursion(root.getRight());
+
+	}// end of inOrderByRecursion
+
+	public boolean delete(int data) {
+
+		if (root == null) {
+
+			return false;
+		}
+
+		Node parent = root;
+		Node del = root;
+
+		while (del.getData() != data) {
+
+			if (data < del.getData()) {
+
+				parent = del;
+				del = del.getLeft();
+			} else {
+
+				parent = del;
+				del = del.getRight();
+			}
+
+			if (del == root) {
+				return false;
+			}
+		} // end of 1st while
+
+		while (true) {
+
+			if (del.getLeft() == null && del.getRight() == null) {
+
+				if (del == root) {
+
+					root = null;
+					return true;
+				}
+
+				if (parent.getLeft() == del) {
+
+					parent.setLeft(null);
+				} else {
+
+					parent.setRight(null);
+				}
+				return true;
+			} // end of 1st if block
+
+			if (del.getLeft() != null) {
+
+				parent = del;
+				Node max = del.getLeft();
+				while (max.getRight() != null) {
+
+					parent = max;
+					max = max.getRight();
+				}
+
+				int temp = del.getData();
+				del.setData(max.getData());
+				max.setData(temp);
+
+				del = max;
+			} else {
+
+				parent = del;
+				Node min = del.getRight();
+
+				while (min.getLeft() != null) {
+
+					parent = min;
+					min = min.getLeft();
+				}
+
+				int temp = del.getData();
+				del.setData(min.getData());
+				min.setData(temp);
+
+				del = min;
+			} // end of 2nd if - else block
+
+		} // end of 2nd while
+
+	}// end of delete method
+
+	public int find(int data) {
+
+		Node temp = root;
+
+		if (root == null) {
+			return 999;
+		}
+
+		while (temp != null) {
+
+			if (temp.getData() == data) {
+				return data;
+			}
+
+			if (data < temp.getData()) {
+
+				temp = temp.getLeft();
+			} else {
+				temp = temp.getRight();
+			}
+		} // end of while
+
+		return 999;
+
+	}// end of find method
+
+	
+	public int getMax() {
+		
+		Node temp = root;
+		
+		while(temp.getRight() != null) {
+			
+			temp = temp.getRight();			
+		}
+		
+		return temp.getData();
+		
+	}//end of getMax method
+	
+	public int getMin() {
+		
+		Node temp = root;
+		
+		while(temp.getLeft() != null) {
+			
+			temp = temp.getLeft();		
+		}
+		
+		return temp.getData();	
+		
+	}//end of getMin method	
+	
+}
+
+
+______________________________________________________________________________________
+
+package Sorting;
+
+public class ThreeSortingAlgos {
+	
+	public static void selectionSort(int [] arr) {
+		
+		for(int i=0; i<arr.length-1; i++) {
+			
+			for(int j=i+1; j<arr.length; j++) {
+				
+				if(arr[i] > arr[j]) {
+					
+					int temp = arr[i];
+					arr[i] = arr[j];
+					arr[j] = temp;
+				}				
+			}
+		}	
+	}//end of selectionSort
+	
+	public static void insertionSort(int [] arr) {
+		
+		for(int i=0; i<arr.length; i++) {
+			
+			for(int j=0; j<i; j++) {
+				
+				if(arr[i] < arr[j]) {
+					
+					int temp = arr[i];
+					arr[i] = arr[j];
+					arr[j] = temp;				
+				}			
+			}
+		}	
+	}//end of insertionSort 
+	
+	public static void bubbleSort(int [] arr) {
+		
+		for(int i=0; i<arr.length; i++) {
+			
+			for(int j=1; j<arr.length-1; j++) {
+				
+				if(arr[j-1] > arr[j]) {
+					
+					int temp = arr[j-1];
+					arr[j-1] = arr[j];
+					arr[j] = temp;	
+				}				
+			}
+		}		
+	}//end of bubbleSort
+
+}
+
+____________________________________________________________________________________________
+
+
+package Sorting;
+
+public class HeapSort {
+
+	public static void heapSort(int[] arr, int length) {
+
+		if (length <= 1) {
+
+			return;
+		}
+
+		for (int i = length - 1; i > 0; i--) {
+
+			if (arr[i] > arr[(i - 1) / 2]) {
+
+				int temp = arr[(i - 1) / 2];
+				arr[(i - 1) / 2] = arr[i];
+				arr[i] = temp;
+			}
+		} // end of for loop
+
+		int temp = arr[0];
+		arr[0] = arr[length - 1];
+		arr[length - 1] = temp;
+
+		heapSort(arr, length - 1);
+	}
+
+}
+
+____________________________________________________________________________________
+
+package Sorting;
+
+public class MergeSort {
+
+	public static void mergeSort(int[] arr, int left, int right) {
+
+		if (left >= right) {
+
+			return;
+		}
+
+		int mid = (left + right) / 2;
+
+		mergeSort(arr, left, mid);
+		mergeSort(arr, mid + 1, right);
+		merge(arr, left, mid, mid + 1, right);
+	}
+
+	public static void merge(int[] arr, int leftStart, int leftEnd, int rightStart, int rightEnd) {
+
+		int noOfElements = rightEnd - leftStart + 1;
+		int[] tempArr = new int[noOfElements];
+		int tempPos = -1;
+
+		while ((leftStart <= leftEnd) && (rightStart <= rightEnd)) {
+
+			if (arr[leftStart] < arr[rightStart]) {
+				tempArr[++tempPos] = arr[leftStart];
+				leftStart++;
+
+			} else {
+
+				tempArr[++tempPos] = arr[rightStart];
+				rightStart++;
+			}
+		} // end of 1st while
+
+		while (leftStart <= leftEnd) {
+
+			tempArr[++tempPos] = arr[leftStart];
+			leftStart++;
+
+		} // end of 2nd while
+
+		while (rightStart <= rightEnd) {
+
+			tempArr[++tempPos] = arr[rightStart];
+			rightStart++;
+
+		} // end of 3rd while
+
+		for (int i = 1; i < noOfElements; i++) {
+
+			arr[rightEnd] = tempArr[tempPos];
+			rightEnd--;
+			tempPos--;		
+		}		
+	}// end of merge method
+
+}
+
+______________________________________________________________________________________
+
+
+public static void quickSort(int [] arr, int left, int right) {
+        if(left >= right) {
+            return;
+        }
+        int pivotLoc = partition(arr, left, right);
+        quickSort(arr, left, pivotLoc - 1);
+        quickSort(arr, pivotLoc + 1, right);
+    }
+
+    private static int partition(int [] arr, int left, int right) {
+        int pivot = arr[left];
+
+        while(left < right) {
+            while (arr[right] > pivot && left != right) {
+                right--;
+            }
+            /*if(left == right) {
+                arr[left] = pivot;
+                return left;
+            }*/
+
+            if(left != right) {
+                arr[left] = arr[right];
+                left++;
+            }
+
+            while (arr[left] < pivot && left != right) {
+                left++;
+            }
+
+            if(left != right) {
+                arr[right] = arr[left];
+                right--;
+            }
+        }
+
+        arr[left] = pivot;
+        return right;
+    }
+    
+
+_______________________________________________________________________________________
+
+
+public class DutchFlagAlgorithm {
+    public int[] dutchFlagAlgorithm(int[] inputArray, int size) {
+        int start = 0;
+        int p = 0;
+        int end = size - 1;
+        int temp;
+        while (p < end) {
+            if (inputArray[p] == 2) {
+                temp = inputArray[p];
+                inputArray[p] = inputArray[start];
+                inputArray[start] = temp;
+                start++;
+                p++;
+            } else if (inputArray[p] == 0) {
+                p++;
+            } else {
+                temp = inputArray[p];
+                inputArray[p] = inputArray[end];
+                inputArray[end] = temp;
+                end--;
+            }
+        }
+        return inputArray;
+    }
+}
+
+
+____________________________________________________________________________________
+
+
+import java.util.LinkedList;
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Graph {
+    private char [] vertices;
+    private int [][] adjMat;
+    private int noOfVertices;
+
+    public Graph(int noOfVertices) {
+        this.noOfVertices = noOfVertices;
+        vertices = new char[noOfVertices];
+        adjMat = new int[noOfVertices][noOfVertices];
+
+        init();
+    }
+
+    private void init() {
+
+        for(int i = 0; i < noOfVertices; i++) {
+            vertices[i] = (char)(65 + i);
+        }
+        int arr[] = {0,1,1,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,0,0,1,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0};
+        int k = 0;
+        for(int i = 0; i < noOfVertices; i++) {
+            for(int j = 0; j < noOfVertices; j++) {
+                adjMat[i][j] = arr[k++];
+            }
+        }
+
+        /*Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter value for vertices");
+        for(int i = 0; i < noOfVertices; i++) {
+            System.out.println("Vertex " + i + ":" );
+            vertices[i] = scanner.next().charAt(0);
+        }
+
+        System.out.println("Enter info about edges: ");
+        for(int i = 0; i < noOfVertices; i++) {
+            for(int j = 0; j < noOfVertices; j++) {
+                System.out.println("Edge betwn " + vertices[i] + " & " + vertices[j]);
+                adjMat[i][j] = scanner.nextInt();
+            }
+        }*/
+    }
+
+    public void display() {
+        System.out.print("  ");
+        for(int i = 0; i < noOfVertices; i++) {
+            System.out.print(vertices[i] + " ");
+        }
+        System.out.println();
+
+        for(int i = 0; i < noOfVertices; i++) {
+            System.out.print(vertices[i] + " ");
+            for (int j = 0; j < noOfVertices; j++) {
+                System.out.print(adjMat[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void dfs(int v) {
+        int [] visited = new int[noOfVertices];
+        Stack<Integer> stack = new Stack<>();
+
+        System.out.println("DFS: ");
+        System.out.print(vertices[v] + " ");
+        visited[v] = 1;
+        stack.push(v);
+
+        while(!stack.empty()) {
+
+            for(int i = 0; i < noOfVertices; i++) {
+                if(adjMat[v][i] == 1 && visited[i] == 0) {
+                    System.out.print(vertices[i] + " ");
+                    visited[i] = 1;
+                    stack.push(i);
+
+                    v = i; //* v holds the vertex on top of stack
+                    i = -1; //reset i to 0
+                 }
+            }
+
+            //no unvisited adj to v is found
+            stack.pop();
+            if(!stack.empty()) {
+                v = stack.peek();
+            }
+        }
+        System.out.println();
+    }
+
+    public void dfs(int v, int [] visited) {
+        if( visited[v] == 0) {
+            System.out.print(vertices[v] + " ");
+            visited[v] = 1;
+            for(int i = 0; i < noOfVertices; i++) {
+                if(adjMat[v][i] == 1 && visited[i] == 0) {
+                    dfs(i, visited);
+                }
+            }
+        }
+    }
+
+    public int getNoOfVertices() {
+        return noOfVertices;
+    }
+
+    public void bfs(int v) {
+        int [] visited = new int[noOfVertices];
+        LinkedList<Integer> queue = new LinkedList<>();
+
+        System.out.print("BFS: ");
+        queue.addLast(v);
+
+        while(!queue.isEmpty()) {
+            v = queue.removeFirst();
+            if(visited[v] == 0) {
+                System.out.print(vertices[v] + " ");
+                visited[v] = 1;
+                for(int i = 0; i < noOfVertices; i++) {
+                    if(adjMat[v][i] == 1 && visited[i] == 0) {
+                        queue.addLast(i);
+                    }
+                }
+            }
+        }
+        System.out.println();
+    }
+}
+
+
+
